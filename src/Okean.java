@@ -21,10 +21,17 @@ class MyFrame extends JFrame {
 		Cursor c1 = Toolkit.getDefaultToolkit().createCustomCursor((new ImageIcon(new byte[0])).getImage(), new Point(0,0),	"custom");
 		pane.setCursor(c1);//убрать курсор
 }}
+
+
+
+
+
+
 class MyPanel extends JPanel {
 	
 	Water water=new Water();
 	Timer timer=new Timer(1, new Dvigok());
+	
 			
 	MyPanel(){
 		addMouseMotionListener( new MyMouse());
@@ -35,10 +42,14 @@ class MyPanel extends JPanel {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		setBackground(new Color(150,255,255));
-		g.setColor(Color.black);//стоблы	
+		
+		//стоблы
+		g.setColor(Color.black);	
 		g.fillRect(400,-100,50,1000);
 		g.fillRect(800,-100,50,1000);
-		g.setColor(Color.blue);//вода
+		
+		//вода
+		g.setColor(Color.blue);
 		g.fillRect(water.x,water.y,water.width,water.hight);
 	}
 	
@@ -46,10 +57,10 @@ class MyPanel extends JPanel {
 	
 	//анимацыя
 	class Dvigok implements ActionListener{
-		Player player; int k=1;
-						
+		
 		public void actionPerformed(ActionEvent arg0) {
-			
+			water.run();
+			repaint();
 		}
 	}
 	
@@ -93,5 +104,21 @@ class Player{
 	
 }
 class Water{
+	
 	int x=450,y=400,width=350,hight=2000;
+	int time, limit=50;
+	
+	void run(){		
+		time+=1;
+		
+		if(time>limit){
+			time-=limit;
+			move(1);
+		}
+	}
+	
+	void move(int number){		
+			y-=number;
+			hight-=number;
+	}
 }
