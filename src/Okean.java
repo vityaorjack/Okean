@@ -41,6 +41,10 @@ class MyPanel extends JPanel {
 		g.setColor(Color.blue);//вода
 		g.fillRect(water.x,water.y,water.width,water.hight);
 	}
+	
+	
+	
+	//анимацыя
 	class Dvigok implements ActionListener{
 		Player player; int k=1;
 						
@@ -48,6 +52,11 @@ class MyPanel extends JPanel {
 			
 		}
 	}
+	
+	
+	
+	
+	//мышка
 	public class MyMouse extends MouseAdapter implements MouseMotionListener{			  				
 		   
 		public void mousePressed(MouseEvent event){	
