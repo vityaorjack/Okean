@@ -31,6 +31,8 @@ class MyPanel extends JPanel {
 	
 	Water water=new Water();
 	Timer timer=new Timer(1, new Dvigok());
+	Tool tool=new Tool();
+	
 	
 			
 	MyPanel(){
@@ -41,16 +43,17 @@ class MyPanel extends JPanel {
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		setBackground(new Color(150,255,255));
-		
+		setBackground(new Color(150,255,255));		
 		//стоблы
 		g.setColor(Color.black);	
 		g.fillRect(400,-100,50,1000);
-		g.fillRect(800,-100,50,1000);
-		
+		g.fillRect(800,-100,50,1000);		
 		//вода
 		g.setColor(Color.blue);
 		g.fillRect(water.x,water.y,water.width,water.hight);
+		//инструмент
+		g.setColor(Color.red);
+		g.fillRect(tool.x,tool.y,tool.width,tool.hight);
 	}
 	
 	
@@ -71,7 +74,7 @@ class MyPanel extends JPanel {
 	public class MyMouse extends MouseAdapter implements MouseMotionListener{			  				
 		   
 		public void mousePressed(MouseEvent event){	
-									
+				water.move(-1);					
 		}
 
 		@Override
@@ -82,8 +85,8 @@ class MyPanel extends JPanel {
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
-			//x=e.getX();
-			//y=e.getY();
+			tool.x=e.getX();
+			tool.y=e.getY();
 			
 		}
 		
@@ -121,4 +124,8 @@ class Water{
 			y-=number;
 			hight-=number;
 	}
+}
+
+class Tool{
+	int x,y,width=10,hight=50;
 }
