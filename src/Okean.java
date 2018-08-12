@@ -14,7 +14,7 @@ public class Okean {
 }}
 class MyFrame extends JFrame {	
 	public MyFrame() {
-		setSize(1280,730);
+		setSize(1280,530);//730
 		MyPanel panel = new MyPanel();
 		Container pane = getContentPane();
 		pane.add(panel);
@@ -74,8 +74,13 @@ class MyPanel extends JPanel {
 	public class MyMouse extends MouseAdapter implements MouseMotionListener{			  				
 		   
 		public void mousePressed(MouseEvent event){	
-				water.move(-1);					
+			water.work=true;
+			System.out.println("-");
 		}
+		public void mouseReleased(MouseEvent event){	
+			water.work=false;
+			System.out.println("+");
+	}
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
@@ -108,21 +113,26 @@ class Player{
 }
 class Water{
 	
-	int x=450,y=400,width=350,hight=2000;
-	int time, limit=50;
+	int x=450,y=400,width=350,hight=500;
+	int limit=50;
+	boolean work;
 	
-	void run(){		
-		time+=1;
-		
-		if(time>limit){
-			time-=limit;
-			move(1);
-		}
-	}
+	void run(){					
+		move(1);		
+		if(work){move(-3);}
+	}	
 	
 	void move(int number){		
-			y-=number;
-			hight-=number;
+			limit+=number;
+			
+			if(limit<1){
+				limit+=50;
+				y+=1;
+			}
+			if(limit>100){
+				limit-=50;
+				y-=1;
+			}
 	}
 }
 
