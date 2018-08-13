@@ -32,6 +32,7 @@ class MyPanel extends JPanel {
 	Water water=new Water();
 	Timer timer=new Timer(1, new Dvigok());
 	Tool tool=new Tool();
+	InterFace interFace=new InterFace();
 	
 	
 			
@@ -43,17 +44,17 @@ class MyPanel extends JPanel {
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		setBackground(new Color(150,255,255));		
-		//стоблы
-		g.setColor(Color.black);	
-		g.fillRect(400,-100,50,1000);
-		g.fillRect(800,-100,50,1000);		
+		setBackground(new Color(150,255,255));	
+			
 		//вода
 		g.setColor(Color.blue);
 		g.fillRect(water.x,water.y,water.width,water.hight);
 		//инструмент
 		g.setColor(Color.red);
 		g.fillRect(tool.x,tool.y,tool.width,tool.hight);
+		
+		interFace.paintComponent(g);
+		
 	}
 	
 	
@@ -63,6 +64,7 @@ class MyPanel extends JPanel {
 		
 		public void actionPerformed(ActionEvent arg0) {
 			water.run();
+			interFace.compartment_Y+=0;
 			repaint();
 		}
 	}
@@ -118,13 +120,13 @@ class Water{
 	boolean work;
 	
 	void run(){					
-		move(1);		
-		if(work){move(-3);}
+		move(1);//течет вода		
+		if(work){move(-3);}//игрок нажал кнопку
 	}	
 	
 	void move(int number){		
-			limit+=number;
-			
+			limit+=number;//увеличения
+			//уровень воды 
 			if(limit<1){
 				limit+=50;
 				y+=1;
@@ -138,4 +140,20 @@ class Water{
 
 class Tool{
 	int x,y,width=10,hight=50;
+}
+
+class InterFace extends JPanel{
+	int compartment_X=400,compartment_Y=400,compartment_W=400,compartment_H=50;
+	
+	public void paintComponent(Graphics g){			
+		//стоблы
+		g.setColor(Color.black);	
+		g.fillRect(400,-100,50,1000);
+		g.fillRect(800,-100,50,1000);
+		//отсек
+		g.fillRect(compartment_X,compartment_Y,compartment_W,compartment_H);
+	}
+	void run(){
+		//compartment_Y
+	}
 }
