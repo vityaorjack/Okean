@@ -35,7 +35,7 @@ class MyPanel extends JPanel {
 	InterFace interFace=new InterFace();
 	
 	int limit=50;
-	
+	boolean work;
 			
 	MyPanel(){
 		addMouseMotionListener( new MyMouse());
@@ -58,8 +58,10 @@ class MyPanel extends JPanel {
 		
 	}
 	
-	void runWater(){		
+	void runWater(){
+		
 		limit+=1;
+		if(work){limit-=3;}
 		
 		if(limit>50){
 			limit-=50;
@@ -68,7 +70,8 @@ class MyPanel extends JPanel {
 		if(limit<-50){
 			limit+=50;
 			water.move(-1);
-		}
+		}	
+		
 	}
 	
 	
@@ -91,12 +94,12 @@ class MyPanel extends JPanel {
 	public class MyMouse extends MouseAdapter{			  				
 		   
 		public void mousePressed(MouseEvent event){	
-			water.work=true;
-			System.out.println("-");
+			work=true;
+			//System.out.println("-");
 		}
 		public void mouseReleased(MouseEvent event){	
-			water.work=false;
-			System.out.println("+");
+			work=false;
+			//System.out.println("+");
 	}
 
 		public void mouseDragged(MouseEvent e) {
@@ -130,17 +133,11 @@ class Player{
 
 class Water{
 	
-	int x=450,y=400,width=350,hight=500;
-	
-	boolean work;
-	
-	void run(){					
-		move(1);//течет вода		
-		if(work){move(-3);}//игрок нажал кнопку
-	}	
+	int x=450,y=400,width=350,hight=500;		
+		
 	
 	void move(int number){		
-				y-=1;			
+				y-=number;			
 	}
 }
 
