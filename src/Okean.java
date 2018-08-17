@@ -34,6 +34,7 @@ class MyPanel extends JPanel {
 	Tool tool=new Tool();
 	InterFace interFace=new InterFace();
 	
+	int limit=50;
 	
 			
 	MyPanel(){
@@ -57,14 +58,28 @@ class MyPanel extends JPanel {
 		
 	}
 	
+	void runWater(){		
+		limit+=1;
+		
+		if(limit>50){
+			limit-=50;
+			water.move(1);
+		}
+		if(limit<-50){
+			limit+=50;
+			water.move(-1);
+		}
+	}
+	
+	
 	
 	
 	//анимацыя
 	class Dvigok implements ActionListener{
 		
 		public void actionPerformed(ActionEvent arg0) {
-			water.run();
-			interFace.compartment_Y+=0;
+			runWater();
+			interFace.compartment_Y+=0;//как передвинуть отсек ?
 			repaint();
 		}
 	}
@@ -73,7 +88,7 @@ class MyPanel extends JPanel {
 	
 	
 	//мышка
-	public class MyMouse extends MouseAdapter implements MouseMotionListener{			  				
+	public class MyMouse extends MouseAdapter{			  				
 		   
 		public void mousePressed(MouseEvent event){	
 			water.work=true;
@@ -84,13 +99,11 @@ class MyPanel extends JPanel {
 			System.out.println("+");
 	}
 
-		@Override
 		public void mouseDragged(MouseEvent e) {
 			//System.out.println("-");
 			
 		}
 
-		@Override
 		public void mouseMoved(MouseEvent e) {
 			tool.x=e.getX();
 			tool.y=e.getY();
@@ -113,10 +126,12 @@ class MyPanel extends JPanel {
 class Player{
 	
 }
+
+
 class Water{
 	
 	int x=450,y=400,width=350,hight=500;
-	int limit=50;
+	
 	boolean work;
 	
 	void run(){					
@@ -125,22 +140,21 @@ class Water{
 	}	
 	
 	void move(int number){		
-			limit+=number;//увеличения
-			//уровень воды 
-			if(limit<1){
-				limit+=50;
-				y+=1;
-			}
-			if(limit>100){
-				limit-=50;
-				y-=1;
-			}
+				y-=1;			
 	}
 }
+
+
+
+
 
 class Tool{
 	int x,y,width=10,hight=50;
 }
+
+
+
+
 
 class InterFace extends JPanel{
 	int compartment_X=400,compartment_Y=400,compartment_W=400,compartment_H=50;
