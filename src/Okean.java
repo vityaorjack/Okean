@@ -53,6 +53,9 @@ class MyPanel extends JPanel {
 		//инструмент
 		g.setColor(Color.red);
 		g.fillRect(tool.x,tool.y,tool.width,tool.hight);
+		//отсек
+		g.setColor(Color.black);
+		g.fillRect(water.compartment_X,water.compartment_Y,water.compartment_W,water.compartment_H);
 		
 		interFace.paintComponent(g);
 		
@@ -81,8 +84,7 @@ class MyPanel extends JPanel {
 	class Dvigok implements ActionListener{
 		
 		public void actionPerformed(ActionEvent arg0) {
-			runWater();
-			interFace.compartment_Y+=0;//как передвинуть отсек ?
+			runWater();			
 			repaint();
 		}
 	}
@@ -134,10 +136,14 @@ class Player{
 class Water{
 	
 	int x=450,y=400,width=350,hight=500;		
-		
+	int compartment_X=400,compartment_Y=300,compartment_W=400,compartment_H=50;	
 	
-	void move(int number){		
-				y-=number;			
+	void move(int number){
+		
+		compartment_Y+=number;
+		//y-=number;
+		if(compartment_Y<-200)compartment_Y=750;
+		else if(compartment_Y>750)compartment_Y=-200;
 	}
 }
 
@@ -154,17 +160,14 @@ class Tool{
 
 
 class InterFace extends JPanel{
-	int compartment_X=400,compartment_Y=400,compartment_W=400,compartment_H=50;
+	
 	
 	public void paintComponent(Graphics g){			
 		//стоблы
 		g.setColor(Color.black);	
 		g.fillRect(400,-100,50,1000);
 		g.fillRect(800,-100,50,1000);
-		//отсек
-		g.fillRect(compartment_X,compartment_Y,compartment_W,compartment_H);
+		
 	}
-	void run(){
-		//compartment_Y
-	}
+	
 }
