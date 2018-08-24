@@ -14,7 +14,7 @@ public class Okean {
 }}
 class MyFrame extends JFrame {	
 	public MyFrame() {
-		setSize(1280,530);//730
+		setSize(1280,730);//730
 		MyPanel panel = new MyPanel();
 		Container pane = getContentPane();
 		pane.add(panel);
@@ -32,6 +32,7 @@ class MyPanel extends JPanel {
 	Water water=new Water();
 	Timer timer=new Timer(1, new Dvigok());
 	Tool tool=new Tool();
+	Player player =new Player();
 	InterFace interFace=new InterFace();
 	
 	int limit=50;
@@ -50,6 +51,8 @@ class MyPanel extends JPanel {
 		//вода
 		g.setColor(Color.blue);
 		g.fillRect(water.x,water.y,water.width,water.hight);
+		//box		
+		g.fillRect(player.box_x,player.box_y,player.box_w,player.box_h);
 		//инструмент
 		g.setColor(Color.red);
 		g.fillRect(tool.x,tool.y,tool.width,tool.hight);
@@ -59,12 +62,16 @@ class MyPanel extends JPanel {
 		
 		interFace.paintComponent(g);
 		
+		
 	}
 	
 	void runWater(){
 		
 		limit+=1;
-		if(work){limit-=3;}
+		if(work){
+			limit-=3;
+			player.water();
+		}
 		
 		if(limit>50){
 			limit-=50;
@@ -130,6 +137,17 @@ class MyPanel extends JPanel {
 
 class Player{
 	
+	int box_x=20,box_y=690,box_w=250,box_h=10;
+	int water;
+	int limit;
+	
+	void water(){
+		water++; limit++;
+		if(limit>10){ System.out.println(water);
+			limit-=10; water++;		
+			box_y=-water; box_h=water;
+		}
+	}
 }
 
 
@@ -142,8 +160,8 @@ class Water{
 		
 		compartment_Y+=number;
 		//y-=number;
-		if(compartment_Y<-200)compartment_Y=750;
-		else if(compartment_Y>750)compartment_Y=-200;
+		if(compartment_Y<-100)compartment_Y=750;
+		else if(compartment_Y>750)compartment_Y=-100;
 	}
 }
 
@@ -167,7 +185,11 @@ class InterFace extends JPanel{
 		g.setColor(Color.black);	
 		g.fillRect(400,-100,50,1000);
 		g.fillRect(800,-100,50,1000);
-		
+		//бочка
+		g.fillRect(20,400,20,300);
+		g.fillRect(250,400,20,300);
+		g.fillOval(20, 380, 250, 50);
+		g.fillOval(20, 670, 250, 50);
 	}
 	
 }
