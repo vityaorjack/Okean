@@ -137,15 +137,16 @@ class MyPanel extends JPanel {
 
 class Player{
 	
-	int box_x=20,box_y=690,box_w=250,box_h=10;
+	int box_x=20,box_y=685,box_w=250,box_h=1;
 	int water;
 	int limit;
 	
 	void water(){
-		water++; limit++;
-		if(limit>10){ System.out.println(water);
-			limit-=10; water++;		
-			box_y=-water; box_h=water;
+		limit++;
+		
+		if(limit>100){ 
+			limit-=100; water++;		
+			box_y=690-water; box_h=water;
 		}
 	}
 }
