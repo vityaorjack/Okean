@@ -35,6 +35,7 @@ class MyPanel extends JPanel {
 	Player player =new Player();
 	InterFace interFace=new InterFace();
 	
+	Font font=new Font("Arial", Font.BOLD, 20);	
 	int limit=50;
 	boolean work;
 			
@@ -51,7 +52,7 @@ class MyPanel extends JPanel {
 		//вода
 		g.setColor(Color.blue);
 		g.fillRect(water.x,water.y,water.width,water.hight);
-		//box		
+		//водяраИгрока		
 		g.fillRect(player.box_x,player.box_y,player.box_w,player.box_h);
 		//инструмент
 		g.setColor(Color.red);
@@ -61,6 +62,10 @@ class MyPanel extends JPanel {
 		g.fillRect(water.compartment_X,water.compartment_Y,water.compartment_W,water.compartment_H);
 		
 		interFace.paintComponent(g);
+		//скорость
+		g.setFont(font);
+		g.setColor(Color.pink);
+		g.drawString("*"+tool.speed, 130, 690);
 		
 		
 	}
@@ -137,16 +142,16 @@ class MyPanel extends JPanel {
 
 class Player{
 	
-	int box_x=20,box_y=685,box_w=250,box_h=1;
+	int box_x=20,box_y,box_w=250,box_h;
 	int water;
 	int limit;
 	
-	void water(){
+	void water(){//Налить водяры - Себе
 		limit++;
 		
 		if(limit>100){ 
 			limit-=100; water++;		
-			box_y=690-water; box_h=water;
+			box_y=682-water; box_h=water;
 		}
 	}
 }
@@ -172,6 +177,8 @@ class Water{
 
 class Tool{
 	int x,y,width=10,hight=50;
+	
+	int speed=1;
 }
 
 
@@ -189,7 +196,7 @@ class InterFace extends JPanel{
 		//бочка
 		g.fillRect(20,400,20,300);
 		g.fillRect(250,400,20,300);
-		g.fillOval(20, 380, 250, 50);
+		g.fillOval(18, 380, 253, 50);
 		g.fillOval(20, 670, 250, 50);
 	}
 	
