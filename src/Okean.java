@@ -29,16 +29,20 @@ class MyFrame extends JFrame {
 
 class MyPanel extends JPanel {
 	
+	
 	Water water=new Water();
 	Timer timer=new Timer(1, new Dvigok());
 	Tool tool=new Tool();
 	Player player =new Player();
 	InterFace interFace=new InterFace();
 	
-	Font font=new Font("Arial", Font.BOLD, 20);	
-	int limit=50;
-	boolean work;
+	Font font=new Font("Arial", Font.BOLD, 20);
+	int limit; // дробная едениця уровня воды, розделяет еденицу "y" на 50
+	boolean work;//когда кнопка нажата
 			
+	
+	
+	
 	MyPanel(){
 		addMouseMotionListener( new MyMouse());
 		addMouseListener( new MyMouse());
@@ -48,7 +52,7 @@ class MyPanel extends JPanel {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		setBackground(new Color(150,255,255));	
-			
+		//движущие объекты	
 		//вода
 		g.setColor(Color.blue);
 		g.fillRect(water.x,water.y,water.width,water.hight);
@@ -73,12 +77,23 @@ class MyPanel extends JPanel {
 	void runWater(){
 		
 		limit+=1;
-		if(work){
-			limit-=3;
-			player.water();
+		
+		//соложный алгоритм
+		if(work){//конопка нажата
+			
+			if(tool.x>400 & tool.x<800) { limit-=1; player.water(); } //если курсор в шахте
+			if(tool.x>20 & tool.x<250) {player.water();}//если в бочке .... добавить параметр в метод "вода"
+			
+			
+			
+			
 		}
 		
-		if(limit>50){
+		//
+		
+		
+		
+		if(limit>50){//дробность стает еденицей "у++" воды
 			limit-=50;
 			water.move(1);
 		}
@@ -96,7 +111,7 @@ class MyPanel extends JPanel {
 	class Dvigok implements ActionListener{
 		
 		public void actionPerformed(ActionEvent arg0) {
-			runWater();			
+			runWater();	//движение воды		
 			repaint();
 		}
 	}
@@ -146,12 +161,12 @@ class Player{
 	int water;
 	int limit;
 	
-	void water(){//Налить водяры - Себе
-		limit++;
+	void water(){//Налить водяры - Себе      .... int power +/-
+		limit++;//+-power
 		
-		if(limit>100){ 
-			limit-=100; water++;		
-			box_y=682-water; box_h=water;
+		if(limit>50){
+			limit-=50; water++;	//дробность стает еденицей уровня воды "у++"	
+			box_y=682-water; box_h=water;//поднять уровень воды вверх и увеличить его объем
 		}
 	}
 }
@@ -159,11 +174,11 @@ class Player{
 
 class Water{
 	
-	int x=450,y=400,width=350,hight=500;		
-	int compartment_X=400,compartment_Y=300,compartment_W=400,compartment_H=50;	
+	int x=450,y=400,width=350,hight=500; //вода, пока не двигается		
+	int compartment_X=400,compartment_Y=300,compartment_W=400,compartment_H=50;	//отсек-планка
 	
 	void move(int number){
-		
+		//отсек/планка - телепортирование
 		compartment_Y+=number;
 		//y-=number;
 		if(compartment_Y<-100)compartment_Y=750;
@@ -186,7 +201,7 @@ class Tool{
 
 
 class InterFace extends JPanel{
-	
+	//клас статичной графики
 	
 	public void paintComponent(Graphics g){			
 		//стоблы
